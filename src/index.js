@@ -1,17 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Component } from 'react';
+import {render} from 'react-dom';
+import './assets/style.css'
+import quizService from './quizService/index';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// const App = () => {
+//     return(
+//         <div>Hello World</div>
+//     )
+// }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// render(<App />, document.getElementById('root'))
+
+// Class component
+
+class QuizBee extends Component {
+    state = {
+        questionBank : []
+    };
+    getQuestions = () =>{
+        quizService().then(question => {
+            this.setState({
+                questionBank: question
+            })
+        })
+    };
+    componentDidMount(){
+        this.getQuestions()
+    }
+    render(){
+        return(
+            <div className="container">
+                <div className="title"> QuizBee </div>
+                { this.state.questionBank.length > 0 && this.state.questionBank.map(
+                    ({question, answers, correct, questionId}) => <h4>{question}</h4>)}
+            </div>
+        )
+    }
+}
+
+render(<QuizBee />, document.getElementById('root'))
