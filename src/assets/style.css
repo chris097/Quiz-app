@@ -86,8 +86,14 @@
   cursor: pointer;
 }
 @media screen and (max-width: 1024px){
-  .container{
+  .container,
+  .score{
     width: 100%;
   }
+
+  .score{
+    font-size: 1.5em;
+  }
+
 
 }
